@@ -2,6 +2,28 @@
 
 Esta guía te ayudará a desplegar el sistema Samaria ERP en un servidor con cPanel paso a paso.
 
+## 🚀 Conexión SSH Rápida (Referencia)
+
+**Para tu cuenta específica (`samariac`):**
+
+```bash
+# Conectar vía SSH
+ssh samariac@samariaconstruction.com
+
+# O usando la IP
+ssh samariac@185.73.8.1
+```
+
+**Información de tu cuenta:**
+- Usuario: `samariac`
+- Servidor: `samariaconstruction.com` o `185.73.8.1`
+- Puerto: `22`
+- Directorio home: `/home/samariac`
+- Directorio web: `/home/samariac/public_html/`
+- Contraseña: La misma que usas para iniciar sesión en cPanel
+
+**⚠️ Nota:** Si SSH no está habilitado, ve a cPanel → Seguridad → Acceso SSH para activarlo.
+
 ## 📋 Requisitos Previos
 
 - Acceso a cPanel
@@ -177,16 +199,113 @@ Esto mostrará la clave. Cópiala y pégala en `.env.production` en el campo `AP
 4. Selecciona los archivos y súbelos
 5. **Nota:** Este método es más lento para muchos archivos, pero no requiere software adicional
 
-**Opción D: Terminal/SSH (Si tienes acceso SSH)**
+**Opción D: Terminal/SSH (Recomendado para despliegues grandes)**
+
+### Habilitar SSH en cPanel
+
+1. En cPanel, busca la sección **"Seguridad"** o **"Security"**
+2. Haz clic en **"Acceso SSH"** o **"SSH Access"**
+3. Si SSH no está habilitado:
+   - Haz clic en **"Administrar claves SSH"** o **"Manage SSH Keys"**
+   - Genera una nueva clave SSH o sube tu clave pública
+   - Activa el acceso SSH para tu cuenta
+4. **Anota la información de conexión** que se muestra
+
+### Información específica para tu cuenta
+
+Basado en tu cPanel (`samariac`):
+- **Usuario SSH:** `samariac`
+- **Servidor SSH:** `samariaconstruction.com` o `185.73.8.1` (IP compartida)
+- **Puerto:** `22` (estándar para SSH)
+- **Directorio home:** `/home/samariac`
+- **Directorio web:** `/home/samariac/public_html/`
+
+**⚠️ Importante:** 
+- Usa la **misma contraseña** que usas para iniciar sesión en cPanel
+- Si SSH no está habilitado, primero debes activarlo desde cPanel → Seguridad → Acceso SSH
+
+### Conectarse vía SSH
+
+**Desde Windows (PowerShell o CMD):**
 
 ```bash
-# Conectar vía SCP (desde tu máquina local)
-scp -r /ruta/local/proyecto/* usuario@tudominio.com:/home/usuario/public_html/samaria-erp/
-
-# O usar rsync (más eficiente)
-rsync -avz --exclude 'node_modules' --exclude '.git' \
-  /ruta/local/proyecto/ usuario@tudominio.com:/home/usuario/public_html/samaria-erp/
+ssh samariac@samariaconstruction.com
+# O usando la IP:
+ssh samariac@185.73.8.1
 ```
+
+**Desde Windows (usando PuTTY - Recomendado):**
+
+1. Descarga PuTTY desde: https://www.putty.org/
+2. Instala y abre PuTTY
+3. Configura la conexión:
+   - **Host Name (or IP address):** `samariaconstruction.com` o `185.73.8.1`
+   - **Port:** `22`
+   - **Connection type:** `SSH`
+4. Haz clic en **"Open"**
+5. Ingresa tu usuario: `samariac`
+6. Ingresa tu contraseña de cPanel (la misma que usas para iniciar sesión)
+
+**Desde Linux/Mac (Terminal):**
+
+```bash
+ssh samariac@samariaconstruction.com
+# O
+ssh samariac@185.73.8.1
+```
+
+**Nota:** La primera vez te pedirá confirmar la huella del servidor. Escribe `yes` y presiona Enter.
+
+### 📋 Resumen Rápido de Conexión SSH para tu Cuenta
+
+**Comando para conectar:**
+```bash
+ssh samariac@samariaconstruction.com
+```
+
+**O usando la IP:**
+```bash
+ssh samariac@185.73.8.1
+```
+
+**Contraseña:** La misma que usas para iniciar sesión en cPanel
+
+**Una vez conectado, navega al proyecto:**
+```bash
+cd /home/samariac/public_html/samaria-erp
+```
+
+### Subir archivos vía SCP (desde tu máquina local)
+
+**Desde Windows (PowerShell):**
+
+```powershell
+# Conectar y subir archivos
+scp -r C:\Users\Henok\Downloads\wonde\samaria-erp\* samariac@samariaconstruction.com:/home/samariac/public_html/samaria-erp/
+```
+
+**Desde Linux/Mac:**
+
+```bash
+# Subir archivos (excluyendo node_modules y .git)
+rsync -avz --exclude 'node_modules' --exclude '.git' --exclude 'vendor' \
+  /ruta/local/samaria-erp/ samariac@samariaconstruction.com:/home/samariac/public_html/samaria-erp/
+```
+
+**O usando SCP:**
+
+```bash
+scp -r /ruta/local/samaria-erp/* samariac@samariaconstruction.com:/home/samariac/public_html/samaria-erp/
+```
+
+### Información específica para tu cuenta
+
+Basado en tu cPanel:
+- **Usuario SSH:** `samariac`
+- **Servidor:** `samariaconstruction.com` o `185.73.8.1`
+- **Directorio home:** `/home/samariac`
+- **Directorio web (probable):** `/home/samariac/public_html/`
+- **Puerto SSH:** `22`
 
 ### 2.2. Estructura de directorios en cPanel
 
