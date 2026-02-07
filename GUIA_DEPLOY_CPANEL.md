@@ -34,7 +34,14 @@ npm run build
 
 ### 1.2. Crear archivo .env para producción
 
-Crea un archivo `.env.production` con las configuraciones del servidor:
+**Opción A: Usar el archivo .env.example como base**
+
+1. Copia el archivo `.env.example` a `.env.production`:
+   ```bash
+   cp .env.example .env.production
+   ```
+
+2. Edita `.env.production` y ajusta los siguientes valores:
 
 ```env
 APP_NAME="Samaria ERP"
@@ -49,31 +56,45 @@ LOG_LEVEL=error
 DB_CONNECTION=mysql
 DB_HOST=localhost
 DB_PORT=3306
-DB_DATABASE=tu_base_de_datos
-DB_USERNAME=tu_usuario_db
-DB_PASSWORD=tu_contraseña_db
+DB_DATABASE=usuario_samariac_samaria
+DB_USERNAME=usuario_samaria_user
+DB_PASSWORD=tu_contraseña_segura_aqui
 
 SESSION_DRIVER=database
 SESSION_LIFETIME=120
+SESSION_TABLE=sessions
 
-# Configuración de correo (opcional)
+# Configuración de correo (opcional, pero recomendado)
 MAIL_MAILER=smtp
-MAIL_HOST=tu_servidor_smtp
+MAIL_HOST=mail.tudominio.com
 MAIL_PORT=587
-MAIL_USERNAME=tu_email
+MAIL_USERNAME=noreply@tudominio.com
 MAIL_PASSWORD=tu_contraseña_email
 MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=noreply@tudominio.com
 MAIL_FROM_NAME="${APP_NAME}"
+
+# Cache y optimización
+CACHE_DRIVER=file
+QUEUE_CONNECTION=sync
 ```
+
+**Nota importante sobre nombres de base de datos en cPanel:**
+- En cPanel, los nombres de base de datos y usuarios tienen un prefijo con tu nombre de usuario de cPanel
+- Ejemplo: Si tu usuario de cPanel es `usuario123`, la base de datos será `usuario123_samariac_samaria`
+- El usuario será `usuario123_samaria_user`
+- **Usa los nombres COMPLETOS** en el archivo `.env`
 
 ### 1.3. Generar clave de aplicación
 
 ```bash
-php artisan key:generate
+# En tu máquina local
+php artisan key:generate --show
 ```
 
-Copia la clave generada al archivo `.env.production`.
+Esto mostrará la clave. Cópiala y pégala en `.env.production` en el campo `APP_KEY`.
+
+**Alternativa:** Si no puedes ejecutar artisan localmente, puedes generar la clave en el servidor después de subir los archivos.
 
 ---
 
