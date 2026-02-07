@@ -100,9 +100,93 @@ Esto mostrará la clave. Cópiala y pégala en `.env.production` en el campo `AP
 
 ## 📤 Paso 2: Subir Archivos al Servidor
 
-### 2.1. Conectar vía FTP/SFTP
+### 2.1. Obtener Credenciales FTP desde cPanel
 
-Usa FileZilla, WinSCP o el File Manager de cPanel.
+**Paso 1: Acceder a la configuración FTP**
+
+1. Inicia sesión en tu **cPanel**
+2. Busca la sección **"Archivos"** o **"Files"**
+3. Haz clic en **"Cuentas FTP"** o **"FTP Accounts"**
+
+**Paso 2: Ver o crear cuenta FTP**
+
+**Si ya tienes una cuenta FTP:**
+- Verás una lista de cuentas FTP existentes
+- Haz clic en **"Configurar"** o **"Configure"** junto a la cuenta que quieras usar
+- Verás los detalles de conexión:
+  - **Servidor FTP:** `ftp.tudominio.com` o la IP del servidor
+  - **Puerto:** `21` (FTP) o `22` (SFTP)
+  - **Usuario:** `usuario@tudominio.com` (formato completo)
+  - **Contraseña:** La que configuraste (o puedes cambiarla)
+
+**Si necesitas crear una cuenta FTP:**
+1. Haz clic en **"Agregar cuenta FTP"** o **"Add FTP Account"**
+2. Completa el formulario:
+   - **Usuario:** Elige un nombre (ej: `samaria`)
+   - **Contraseña:** Genera una segura
+   - **Directorio:** Deja el predeterminado o especifica uno
+3. Haz clic en **"Crear cuenta FTP"** o **"Create FTP Account"**
+4. **Anota las credenciales** que se muestran
+
+**Paso 3: Información importante**
+
+- **Usuario completo:** En cPanel, el usuario FTP siempre incluye tu dominio
+  - Formato: `usuario@tudominio.com`
+  - Ejemplo: Si tu dominio es `samaria.com` y creaste usuario `admin`, será `admin@samaria.com`
+
+- **Servidor FTP:** Puede ser:
+  - `ftp.tudominio.com`
+  - `tudominio.com`
+  - La IP del servidor (pregunta a tu proveedor de hosting)
+
+- **Puerto:**
+  - **FTP:** `21` (estándar)
+  - **SFTP:** `22` (más seguro, recomendado)
+
+### 2.2. Conectar con Cliente FTP
+
+**Opción A: FileZilla (Recomendado - Gratis)**
+
+1. Descarga FileZilla desde: https://filezilla-project.org/
+2. Instala y abre FileZilla
+3. En la parte superior, ingresa:
+   - **Host:** `ftp.tudominio.com` (o la IP)
+   - **Usuario:** `usuario@tudominio.com` (usuario completo)
+   - **Contraseña:** Tu contraseña FTP
+   - **Puerto:** `21` (FTP) o `22` (SFTP)
+4. Haz clic en **"Conexión rápida"** o **"Quickconnect"**
+5. Si es la primera vez, acepta el certificado del servidor
+
+**Opción B: WinSCP (Windows - Gratis)**
+
+1. Descarga WinSCP desde: https://winscp.net/
+2. Instala y abre WinSCP
+3. Selecciona **"SFTP"** como protocolo
+4. Ingresa:
+   - **Nombre del equipo:** `tudominio.com` o IP del servidor
+   - **Puerto:** `22`
+   - **Nombre de usuario:** `usuario@tudominio.com`
+   - **Contraseña:** Tu contraseña FTP
+5. Haz clic en **"Iniciar sesión"**
+
+**Opción C: File Manager de cPanel (Sin cliente FTP)**
+
+1. En cPanel, ve a **"Administrador de archivos"** o **"File Manager"**
+2. Navega al directorio donde quieres subir los archivos
+3. Haz clic en **"Subir"** o **"Upload"**
+4. Selecciona los archivos y súbelos
+5. **Nota:** Este método es más lento para muchos archivos, pero no requiere software adicional
+
+**Opción D: Terminal/SSH (Si tienes acceso SSH)**
+
+```bash
+# Conectar vía SCP (desde tu máquina local)
+scp -r /ruta/local/proyecto/* usuario@tudominio.com:/home/usuario/public_html/samaria-erp/
+
+# O usar rsync (más eficiente)
+rsync -avz --exclude 'node_modules' --exclude '.git' \
+  /ruta/local/proyecto/ usuario@tudominio.com:/home/usuario/public_html/samaria-erp/
+```
 
 ### 2.2. Estructura de directorios en cPanel
 
