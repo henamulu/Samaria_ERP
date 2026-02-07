@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(php artisan tinker:*)",
+      "Bash(php artisan migrate:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(powershell -File /dev/null -Command \"Write-Output ''test''\")",
+      "Bash(powershell:*)",
+      "Bash(php -r:*)",
+      "Bash(php check_bom.php:*)",
+      "Bash(php:*)",
+      "Bash(del check_bom.php fix_bom.php)"
+    ]
+  }
+}
